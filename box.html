@@ -49,6 +49,11 @@ var chart = d3.box()
     .whiskers(iqr(1.5))
     .width(width)
     .height(height);
+    
+var chart2 = d3.box()
+    .whiskers(iqr(1.5))
+    .width(width)
+    .height(height);
 
 d3.csv("/csv/wine.csv", function(error, csv) {
   if (error) throw error;
@@ -58,7 +63,7 @@ d3.csv("/csv/wine.csv", function(error, csv) {
   csv.forEach(function(x, i) {
     var e = x.Wine - 1,
 		    r = i - 1,
-        s = x.A2,
+        s = x.A1,
         d = data[e];
     if (!d) d = data[e] = [s];
     else d.push(s);
@@ -75,24 +80,33 @@ d3.csv("/csv/wine.csv", function(error, csv) {
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.bottom + margin.top)
     .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .call(chart);
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      //.call(chart);
 
-    //svg.call(chart.duration(1000));
-    
-    d3.selectAll("button").on("click", function() {
+    svg.call(chart.duration(1000));
+   d3.selectAll("button").on("click", function() {
+      var data = [];
       csv.forEach(function(x, i) {
-    var e = x.Wine - 1,
-		    r = i - 1,
-        s = x.A2,
-        d = data[e];
-    if (!d) d = data[e] = [s];
-    else d.push(s);
-    if (s > max) max = s;
-    if (s < min) min = s;
-    });
-    chart.domain([min, max]);
-    svg.call(chart.duration(1000)); // TODO automatic transition
+        var e = x.Wine - 1,
+		      r = i - 1,
+          s = x.A2,
+          d = data[e];
+          if (!d) d = data[e] = [s];
+          else d.push(s);
+          if (s > max) max = s;
+          if (s < min) min = s;
+      });
+      chart2.domain([min, max]);
+      svg=null;
+      var svg = d3.select("body").selectAll("svg")
+      .data(data)
+    .enter().append("svg")
+      .attr("class", "box")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.bottom + margin.top)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      svg.call(chart2.duration(1000)); // TODO automatic transition
   });
 });
 
