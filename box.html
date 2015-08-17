@@ -29,7 +29,7 @@ body {
 
 </style>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script src="box.js"></script>
 <script>
 function updateData(str){
@@ -39,8 +39,6 @@ var margin = {top: 10, right: 50, bottom: 20, left: 50},
 
 var min = Infinity,
     max = -Infinity;
-
-//d3.select("body").selectAll("svg").remove().transition().duration(1000);
 
 d3.csv("/csv/wine.csv", function(error, csv) {
   if (error) throw error;
@@ -52,9 +50,9 @@ d3.csv("/csv/wine.csv", function(error, csv) {
     
   var data = [];
   
-  csv.forEach(function(x, i) {
+  csv.forEach(function(x) {
     var e = x.Wine-1,
-        r = i,
+        r = 1,
         s = x[str],
         d = data[e];
     if (!d) d = data[e] = [s];
@@ -66,14 +64,7 @@ d3.csv("/csv/wine.csv", function(error, csv) {
   chart.domain([min, max]);
 
   var svg = d3.select("body").selectAll("g")
-      .data(data);/*
-    .enter().append("svg")
-      .attr("class", "box")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.bottom + margin.top)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-      //.call(chart);*/
+      .data(data);
   
   svg.call(chart.duration(1000)); 
   svg.enter().append("svg")
@@ -84,11 +75,9 @@ d3.csv("/csv/wine.csv", function(error, csv) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .call(chart);
 
-//svg.exit().remove().transition().duration(1000);
-
 });
 };
-//updateData("Hue");
+updateData("Alcohol");
 
   
 
@@ -107,5 +96,18 @@ function iqr(k) {
 }
 
 </script>
+<div>
 <button onclick="updateData('Alcohol')">Alcohol</button>
+<button onclick="updateData('Malic Acid')">Malic Acid</button>
+<button onclick="updateData('Ash')">Ash</button>
+<button onclick="updateData('Alcalinity of Ash')">Alcalinity of Ash</button>
+<button onclick="updateData('Magnesium')">Magnesium</button>
+<button onclick="updateData('Total Phenols')">Total Phenols</button>
+<button onclick="updateData('Flavanoids')">Flavanoids</button>
+<button onclick="updateData('Nonflavanoid Phenols')">Nonflavanoid Phenols</button>
+<button onclick="updateData('Proanthocyanins')">Proanthocyanins</button>
+<button onclick="updateData('Color Intensity')">Color Intensity</button>
 <button onclick="updateData('Hue')">Hue</button>
+<button onclick="updateData('OD280/OD5 of Diluted Wines')">OD280/OD5 of Diluted Wines</button>
+<button onclick="updateData('Proline')">Proline</button>
+</div>

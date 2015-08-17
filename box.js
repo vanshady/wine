@@ -35,7 +35,7 @@ d3.box = function() {
 
       // Compute the new x-scale.
       var x1 = d3.scale.linear()
-          .domain(domain && domain.call(this, d, i) || [min, max])
+          .domain(/*domain && domain.call(this, d, i) || */[min, max])
           .range([height, 0]);
 
       // Retrieve the old x-scale, if this is an update.
