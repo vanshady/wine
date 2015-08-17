@@ -155,7 +155,7 @@ d3.box = function() {
       var outlier = g.selectAll("circle.outlier")
           .data(outlierIndices, Number);
 
-      outlier.enter().insert("circle", "text")
+      outlier.enter().insert("circle")
           .attr("class", "outlier")
           .attr("r", 5)
           .attr("cx", width / 2)
