@@ -37,12 +37,12 @@ var margin = {top: 10, right: 50, bottom: 20, left: 50},
     width = 120 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var min = Infinity,
-    max = -Infinity;
-
 d3.csv("/csv/wine.csv", function(error, csv) {
   if (error) throw error;
   
+  var min = Infinity,
+    max = -Infinity;
+    
   var chart = d3.box()
     .whiskers(iqr(1.5))
     .width(width)
@@ -53,7 +53,7 @@ d3.csv("/csv/wine.csv", function(error, csv) {
   csv.forEach(function(x) {
     var e = x.Wine-1,
         r = 1,
-        s = x[str],
+        s = x[str]*,
         d = data[e];
     if (!d) d = data[e] = [s];
     else d.push(s);
