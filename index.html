@@ -194,9 +194,11 @@ d3.csv("/csv/wine_median.csv", function(error, wines) {
       .attr("class", "axis")
       .each(function(d) { d3.select(this).call(axis.scale(y[d])); })
     .append("text")
+      .attr("class","labelbtn")
       .style("text-anchor", "middle")
       .attr("y", -9)
-      .text(function(d) { return d; });
+      .text(function(d) { return d; })
+      .attr("onclick", function(d){return "updateData('" + d+"')"});
 
   // Add and store a brush for each axis.
   g.append("g")
