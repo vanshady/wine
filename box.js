@@ -10,7 +10,9 @@ d3.box = function() {
       whiskers = boxWhiskers,
       quartiles = boxQuartiles,
       tickFormat = null;
-
+  
+  var color = d3.scale.ordinal().range(["#F44336", "#FFC107","#448AFF"]);
+    
   // For each small multiple…
   function box(g) {
     g.each(function(d, i) {
