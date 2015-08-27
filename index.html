@@ -62,6 +62,25 @@ body {
   stroke: #ccc;
 }
 
+.buttons {
+	/*background:linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);*/
+	background-color:#2196F3;
+	border-radius:5px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	cursor:pointer;
+	color:#fff;
+	font-family:Helvetica;
+}
+.buttons:hover {
+	background:linear-gradient(to bottom, #2196F3 5%, #90CAF9 100%);
+	background-color:#90CAF9;
+}
+.buttons:active {
+	position:relative;
+	top:1px;
+}
+
 button {
   width: 91.5px;
   font-size:10px;
@@ -81,6 +100,13 @@ var margin = {top: 10, right: 50, bottom: 20, left: 50},
 d3.csv("/csv/wine.csv", function(error, csv) {
   if (error) throw error;
   
+  var sub = document.getElementById("sub");
+   sub.innerHTML = str;
+   var elems = document.getElementsByClassName("buttons");
+   for (var i = 0; i < elems.length; i++)
+    elems[i].style.backgroundColor="#2196F3";
+   document.getElementById(str).style.backgroundColor="#90CAF9";
+   
   var min = Infinity,
     max = -Infinity;
     
@@ -112,17 +138,14 @@ d3.csv("/csv/wine.csv", function(error, csv) {
       .attr("class", "box")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.bottom + margin.top)
-      //.style("fill",function(d,i){return color2(i)})
+      .style("fill",function(d,i){return color2(i)})
     .append("g")
       .attr("transform", "translate(" + (margin.left) + "," + margin.top + ")")
-      .call(chart);
-   var sub = document.getElementById("sub");
-   sub.innerHTML = str;
+      .call(chart); 
 });
 
 };
 updateData("Alcohol");  
-
 // Returns a function to compute the interquartile range.
 function iqr(k) {
   return function(d, i) {
@@ -232,20 +255,20 @@ function brush() {
   });
 }
 </script>
-<div class="buttons">
-<button onclick="updateData('Alcohol')">Alcohol</button>
-<button onclick="updateData('Malic Acid')">Malic Acid</button>
-<button onclick="updateData('Ash')">Ash</button>
-<button onclick="updateData('Alcalinity of Ash')">Alcalinity</button>
-<button onclick="updateData('Magnesium')">Magnesium</button>
-<button onclick="updateData('Total Phenols')">Total Phenols</button>
-<button onclick="updateData('Flavanoids')">Flavanoids</button>
-<button onclick="updateData('Nonflavanoid Phenols')">Nonflavanoid</button>
-<button onclick="updateData('Proanthocyanins')">Proanthocyanins</button>
-<button onclick="updateData('Color Intensity')">Color Intensity</button>
-<button onclick="updateData('Hue')">Hue</button>
-<button onclick="updateData('OD280/OD5 of Diluted Wines')">OD280/OD5</button>
-<button onclick="updateData('Proline')">Proline</button>
+<div>
+<button class="buttons" id="Alcohol" onclick="updateData('Alcohol')">Alcohol</button>
+<button class="buttons" id="Malic Acid" onclick="updateData('Malic Acid')">Malic Acid</button>
+<button class="buttons" id="Ash" onclick="updateData('Ash')">Ash</button>
+<button class="buttons" id="Alcalinity of Ash" onclick="updateData('Alcalinity of Ash')">Alcalinity</button>
+<button class="buttons" id="Magnesium" onclick="updateData('Magnesium')">Magnesium</button>
+<button class="buttons" id="Total Phenols" onclick="updateData('Total Phenols')">Total Phenols</button>
+<button class="buttons" id="Flavanoids" onclick="updateData('Flavanoids')">Flavanoids</button>
+<button class="buttons" id="Nonflavanoid Phenols" onclick="updateData('Nonflavanoid Phenols')">Nonflavanoid</button>
+<button class="buttons" id="Proanthocyanins" onclick="updateData('Proanthocyanins')">Proanthocyanins</button>
+<button class="buttons" id="Color Intensity" onclick="updateData('Color Intensity')">Color Intensity</button>
+<button class="buttons" id="Hue" onclick="updateData('Hue')">Hue</button>
+<button class="buttons" id="OD280/OD5 of Diluted Wines" onclick="updateData('OD280/OD5 of Diluted Wines')">OD280/OD5</button>
+<button class="buttons" id="Proline" onclick="updateData('Proline')">Proline</button>
 </div>
 <h3 style="width:366px" align="center" id="sub">Alcohol</h3>
 </body>
