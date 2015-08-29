@@ -89,7 +89,19 @@ button {
 #h4 {
   width:300px; 
   position: relative;
-  left: 880px;
+  left: 953px;
+}
+
+td, th {
+    padding: 1px 4px;
+}
+
+#table {
+  position: relative;
+  left: 100px;
+  width: 300px;
+  height: 400px;
+  overflow-y: scroll;
 }
 </style>
 </head>
@@ -97,8 +109,6 @@ button {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script src="box.js"></script>
 <script>
-
-
 var margin = {top: 30, right: 10, bottom: 10, left: 0},
     width = 1270 - margin.left - margin.right,
     height = 200 - margin.top - margin.bottom;
@@ -112,8 +122,8 @@ var svgpar = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-var color = d3.scale.ordinal().range(["none","#F44336", "#FFC107","#448AFF","none","#8BC34A","#18FFFF","#8BC34A"]);
-var color2 = d3.scale.ordinal().range(["#F44336", "#FFC107","#448AFF"]);
+var color = d3.scale.ordinal().range(["none","#F44336", "#8BC34A","#448AFF","none"]);
+var color2 = d3.scale.ordinal().range(["#F44336", "#8BC34A","#448AFF"]);
 var opac = d3.scale.ordinal().range([0,1, .3,.3,0]);
 var line = d3.svg.line(),
     axis = d3.svg.axis().orient("left"),
@@ -193,27 +203,29 @@ function brush() {
     }) ? null : "none";
   });
 }
+
 </script>
-<div>
-<button class="buttons" id="Alcohol" onclick="updateData('Alcohol')">Alcohol</button>
-<button class="buttons" id="Malic Acid" onclick="updateData('Malic Acid')">Malic Acid</button>
-<button class="buttons" id="Ash" onclick="updateData('Ash')">Ash</button>
-<button class="buttons" id="Alcalinity of Ash" onclick="updateData('Alcalinity of Ash')">Alcalinity</button>
-<button class="buttons" id="Magnesium" onclick="updateData('Magnesium')">Magnesium</button>
-<button class="buttons" id="Total Phenols" onclick="updateData('Total Phenols')">Total Phenols</button>
-<button class="buttons" id="Flavanoids" onclick="updateData('Flavanoids')">Flavanoids</button>
-<button class="buttons" id="Nonflavanoid Phenols" onclick="updateData('Nonflavanoid Phenols')">Nonflavanoid</button>
-<button class="buttons" id="Proanthocyanins" onclick="updateData('Proanthocyanins')">Proanthocyanins</button>
-<button class="buttons" id="Color Intensity" onclick="updateData('Color Intensity')">Color Intensity</button>
-<button class="buttons" id="Hue" onclick="updateData('Hue')">Hue</button>
-<button class="buttons" id="OD280/OD5 of Diluted Wines" onclick="updateData('OD280/OD5 of Diluted Wines')">OD280/OD5</button>
-<button class="buttons" id="Proline" onclick="updateData('Proline')">Proline</button>
+<div style="width:1920px" style="display:block">
+<button class="buttons" id="Alcohol" onclick="fun('Alcohol')">Alcohol</button>
+<button class="buttons" id="Malic Acid" onclick="fun('Malic Acid')">Malic Acid</button>
+<button class="buttons" id="Ash" onclick="fun('Ash')">Ash</button>
+<button class="buttons" id="Alcalinity of Ash" onclick="fun('Alcalinity of Ash')">Alcalinity</button>
+<button class="buttons" id="Magnesium" onclick="fun('Magnesium')">Magnesium</button>
+<button class="buttons" id="Total Phenols" onclick="fun('Total Phenols')">Total Phenols</button>
+<button class="buttons" id="Flavanoids" onclick="fun('Flavanoids')">Flavanoids</button>
+<button class="buttons" id="Nonflavanoid Phenols" onclick="fun('Nonflavanoid Phenols')">Nonflavanoid</button>
+<button class="buttons" id="Proanthocyanins" onclick="fun('Proanthocyanins')">Proanthocyanins</button>
+<button class="buttons" id="Color Intensity" onclick="fun('Color Intensity')">Color Intensity</button>
+<button class="buttons" id="Hue" onclick="fun('Hue')">Hue</button>
+<button class="buttons" id="OD280/OD5 of Diluted Wines" onclick="fun('OD280/OD5 of Diluted Wines')">OD280/OD5</button>
+<button class="buttons" id="Proline" onclick="fun('Proline')">Proline</button>
 </div>
 <div id ="h4" >
 <h4  align="center" id="sub" style="width:300px">Alcohol</h4></div>
 </body>
 <script>
-d3.select("body").insert("svg").attr("id","outsvg").attr("class", "box").attr("width","400px").attr("height","400px").style("float","right");
+
+d3.select("body").insert("svg").attr("id","outsvg").attr("class", "box").attr("width","320px").attr("height","400px").style("float","right");
 //d3.select("#outsvg").append("text").attr("align","center").attr("id","sub").text("Alcohol");
 function updateData(str){
 var margin = {top: 10, right: 50, bottom: 20, left: 50},
@@ -284,4 +296,53 @@ function iqr(k) {
     return [i, j];
   };
 }
+
+
+// Get the data
+function tabulate(columns) {
+d3.csv("/csv/wine.csv", function(error, data) {
+// The table generation function
+
+    d3.select("#table").remove();
+    var table = d3.select("body").append("div").attr("id","table")
+            .append("table")
+            /*.attr("style", "margin-left: 250px")*/,
+        thead = table.append("thead"),
+        tbody = table.append("tbody");
+
+    // append the header row
+    thead.append("tr")
+        .selectAll("th")
+        .data(columns)
+        .enter()
+        .append("th")
+            .text(function(column) { return column; });
+
+    // create a row for each object in the data
+    var rows = tbody.selectAll("tr")
+        .data(data)
+        .enter()
+        .append("tr");
+
+    // create a cell in each row for each column
+    var cells = rows.selectAll("td")
+        .data(function(row) {
+            return columns.map(function(column) {
+                return {column: column, value: row[column]};
+            });
+        })
+        .enter()
+        .append("td")
+        .attr("style", "font-family: Courier") // sets the font style
+            .html(function(d) { return d.value; });
+    
+    return table;
+});}
+
+tabulate(["Wine","Alcohol"]);
+function fun(str){
+   updateData(str);  
+   tabulate(["Wine",str]);
+}
 </script>
+</body>
