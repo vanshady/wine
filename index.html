@@ -88,8 +88,10 @@ button {
 
 #h4 {
   width:300px; 
-  position: relative;
-  left: 953px;
+  display: inline-block;
+  float: right;
+  /*position: relative;*/
+  margin-right: 600px;
 }
 
 td, th {
@@ -98,9 +100,10 @@ td, th {
 
 #table {
   position: relative;
-  left: 100px;
+  left: 40px;
   width: 300px;
-  height: 400px;
+  top: 10px;
+  height: 450px;
   overflow-y: scroll;
 }
 </style>
@@ -205,7 +208,7 @@ function brush() {
 }
 
 </script>
-<div style="width:1920px" style="display:block">
+<div  style="display:block">
 <button class="buttons" id="Alcohol" onclick="fun('Alcohol')">Alcohol</button>
 <button class="buttons" id="Malic Acid" onclick="fun('Malic Acid')">Malic Acid</button>
 <button class="buttons" id="Ash" onclick="fun('Ash')">Ash</button>
@@ -225,7 +228,7 @@ function brush() {
 </body>
 <script>
 
-d3.select("body").insert("svg").attr("id","outsvg").attr("class", "box").attr("width","320px").attr("height","400px").style("float","right");
+d3.select("#h4").append("svg").attr("id","outsvg").attr("class", "box").attr("width","320px").attr("height","400px").style("float","right");
 //d3.select("#outsvg").append("text").attr("align","center").attr("id","sub").text("Alcohol");
 function updateData(str){
 var margin = {top: 10, right: 50, bottom: 20, left: 50},
@@ -306,7 +309,7 @@ d3.csv("/csv/wine.csv", function(error, data) {
     d3.select("#table").remove();
     var table = d3.select("body").append("div").attr("id","table")
             .append("table")
-            /*.attr("style", "margin-left: 250px")*/,
+            .attr("style", "margin-top: 20px"),
         thead = table.append("thead"),
         tbody = table.append("tbody");
 
