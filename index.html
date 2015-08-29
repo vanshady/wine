@@ -3,7 +3,6 @@
 <meta charset="utf-8">
 <title>Overview</title>
 <style>
-
 svg {
   font: 10px sans-serif;
 }
@@ -15,7 +14,6 @@ svg {
 
 .foreground path {
   fill: none;
-  /*stroke: steelblue;*/
   stroke-width: 3px;
 }
 
@@ -60,7 +58,6 @@ body {
 }
 
 .buttons {
-	/*background:linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);*/
 	background-color:#2196F3;
 	border-radius:5px;
 	border:1px solid #84bbf3;
@@ -87,7 +84,6 @@ button {
   width:300px; 
   display: inline-block;
   float: right;
-  /*position: relative;*/
   margin-right: 600px;
 }
 
@@ -225,7 +221,6 @@ function brush() {
 <script>
 
 d3.select("#h4").append("svg").attr("id","outsvg").attr("class", "box").attr("width","320px").attr("height","400px").style("float","right");
-//d3.select("#outsvg").append("text").attr("align","center").attr("id","sub").text("Alcohol");
 function updateData(str){
 var margin = {top: 10, right: 50, bottom: 20, left: 50},
     width = 120 - margin.left - margin.right,
@@ -270,10 +265,6 @@ d3.csv("/csv/wine.csv", function(error, csv) {
   
   svg.call(chart.duration(1000)); 
   svg.enter().append("svg")
-      //.attr("transform", "translate(" + (100) + "," + 0 + ")")
-      //.attr("class", "box")
-      //.attr("width", width + margin.left+ + margin.right)
-      //.attr("height", height + margin.bottom + margin.top)
       .style("fill",function(d,i){return color2(i)})
     .append("g")
       .attr("transform", function(d,i){return "translate(" + (margin.left+i*100) + "," + margin.top + ")";})
