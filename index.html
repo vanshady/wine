@@ -114,15 +114,15 @@ td, th {
 }
 
 #legends {
-  font: 16px Arial;
+  font: 18px Arial;
 }
 
 #arrow {
   width:20px;
-  height: 20px;
+  height: 40px;
   position: absolute;
-  left:800px;
-  top:330px;
+  left:1010px;
+  top:290px;
 }
 </style>
 </head>
@@ -361,43 +361,66 @@ function iqr(k) {
   };
 }
 
-var svg = d3.select("#all").append("div").attr("id","legend").append("svg").attr("width","500px").attr("height","300px").append("g").attr("id","legends");
+var svg = d3.select("#all").append("div").attr("id","legend").append("svg").attr("width","650px").attr("height","450px").append("g").attr("id","legends");
 
    svg.append('circle')
     .style('fill', colors[0])
 		.attr('r', 5)
 		.attr('cx', 10)
-		.attr('cy', 25);
+		.attr('cy', 95);
      
    svg.append("text")
     .text('Wine 1')
     .style("text-anchor", "start")
     .attr("x",60)
-    .attr("y",30);
+    .attr("y",100);
   
   svg.append('circle')
     .style('fill', colors[1])
 		.attr('r', 5)
 		.attr('cx', 10)
-		.attr('cy', 50);
+		.attr('cy', 120);
     
   svg.append("text")
     .text('Wine 2')
     .style("text-anchor", "start")
     .attr("x",60)
-    .attr("y",55);
+    .attr("y",125);
   
   svg.append('circle')
     .style('fill', colors[2])
 		.attr('r', 5)
 		.attr('cx',10)
-		.attr('cy', 75);
+		.attr('cy', 145);
     
   svg.append("text") 
     .text('Wine 3')
     .style("text-anchor", "start")
     .attr("x", 60)
-    .attr("y", 80);
+    .attr("y", 150);
+    
+  svg.append("text") 
+    .text('Brush to filter the parallel coordinates.')
+    .style("text-anchor", "middle")
+    .style("font-size", "18px")
+    .attr("x", 400)
+    .attr("y", 100);
+    
+  svg.append("text") 
+    .text('And press the buttons to see more.')
+    .style("text-anchor", "middle")
+    .style("font-size", "18px")
+    .attr("x", 400)
+    .attr("y", 130);
+    
+  svg.append("text") 
+    .text('By Minwei Xu')
+    .style("text-anchor", "end")
+    .style("font", "10px Arial")
+    .style("font-weight", "bold")
+    .style("fill", "grey")
+    .attr("x", 650)
+    .attr("y", 440);
 </script>
 <img id="arrow" src="arrow.jpg" />
 </body>
